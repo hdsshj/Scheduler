@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-    const {is_flex, width, padding, margin, bg, children, center, maxheight, _onClick} = props;
+    const { is_flex, width, padding, margin, bg, children, center, maxheight, _onClick} = props;
 
     const styles = {
         is_flex : is_flex,
@@ -13,6 +13,7 @@ const Grid = (props) => {
         center:center,
         maxheight:maxheight,
     }
+
 
     return (
         <React.Fragment>
@@ -26,7 +27,7 @@ const Grid = (props) => {
 Grid.defaultProps = {
     children : null,
     is_flex: false,
-    width : '70%',
+    width : '100%',
     padding : false,
     margin : false,
     bg : false,
@@ -46,8 +47,6 @@ const GridBox = styled.div`
     ${(props)=>props.is_flex ? `display: flex; align-items: center; justify-content: space-between;` : ''};
     ${(props)=>props.center ? 'text-align : center;' : ''};
     ${(props)=>props.maxheight ? `max-height : ${props.maxheight};` : ''};
-
-
 `;
 
 export default Grid;
