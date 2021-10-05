@@ -7,13 +7,13 @@ import { history } from "../redux/configStore";
 
 const SchCreate = (props) => {
     const dispatch = useDispatch()
-    const [schedule, setSchedule] = React.useState('');
+    const [title, setTitle] = React.useState('');
     const [date, setDate] = React.useState('');
 
 
 
-    const changeSch = (e) => {
-      setSchedule(e.target.value)
+    const changeTitle = (e) => {
+      setTitle(e.target.value)
       console.log(e.target.value)
     }
 
@@ -23,8 +23,8 @@ const SchCreate = (props) => {
     }
 
     const createSch = () => {
-      console.log(schedule, date)
-      dispatch(schAction.addSch({schedule : schedule , date : date}))
+      console.log(title, date)
+      dispatch(schAction.addSch({title : title , date : date}))
     }
 
     return (
@@ -32,7 +32,7 @@ const SchCreate = (props) => {
       <Grid padding="30px">
         <Grid>
           <Text>일정 내용</Text>
-          <Input type = 'text' _onChange = {changeSch}/>
+          <Input type = 'text' _onChange = {changeTitle}/>
         </Grid>
         <Grid>
           <Text>일시</Text>
