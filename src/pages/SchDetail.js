@@ -17,11 +17,11 @@ const SchDetail = (props) => {
         </Grid>
         <Grid is_flex>
           <Grid padding = '16px'>
-            <Button>작성 취소</Button>
+            <Button>일정 삭제</Button>
           </Grid>
 
           <Grid padding = '16px'>
-            <Button>작성 완료</Button>
+            <Button>일정 완료</Button>
           </Grid>
         </Grid>
       </Grid>
