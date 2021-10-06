@@ -7,6 +7,7 @@ import { history } from "../redux/configStore";
 
 const SchCreate = (props) => {
     const dispatch = useDispatch()
+
     const [title, setTitle] = React.useState('');
     const [date, setDate] = React.useState('');
 

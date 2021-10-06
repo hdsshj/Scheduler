@@ -5,18 +5,19 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import Grid from "../elements/Grid";
 import { history } from "../redux/configStore";
 
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import { actionCreators as schActions } from "../redux/modules/schedule";
 import { map } from "lodash";
 import { Button } from "../elements";
+import SchDetail from "./SchDetail";
 
 const Calendar = (props) => {
+  const dispatch = useDispatch();
+  const [schdetail, handleSchDetail] = React.useState(false)
+  const [sch_id, setSchId] = React.useState('')
   const sch_list = useSelector((state) => state.schedule.sch_list)
+  const handlePopup = useSelector((state) => state.schedule.is_popup)
 
-
-  const a = () => {
-    console.log(Calendar.getEventSource())
-  }
-  
   
   const {events} = props;
 
@@ -26,9 +27,18 @@ const Calendar = (props) => {
 
   // 클릭 시 이벤트 정보 받아옴
   const handleEventClick = (clickInfo) => {
-    history.push(`/detail/${clickInfo.event.id}`) 
-    // console.log(clickInfo.event.title) // title 값 나옴
+    // 리덕스 에서 팝업 관리
+    setSchId(clickInfo.event.id)
+    if(!handlePopup){
+      dispatch(schActions.onPopup(true))
     }
+    // handleSchDetail(true)
+
+    // history.push(`/detail/${clickInfo.event.id}`) 
+    // console.log(clickInfo.event) // title 값 나옴
+    
+    }
+
 
   const handleDateSelect = (selectInfo) => {
     console.log(selectInfo) 
@@ -40,7 +50,7 @@ const Calendar = (props) => {
   return (
 
     <Grid width="70%" padding="30px">
-      <Button _onClick = {a}/>
+      {handlePopup && <SchDetail onClose = {handleSchDetail} sch_id = {sch_id}/>}
       <FullCalendar
         plugins={[dayGridPlugin,interactionPlugin]}
         initialView="dayGridMonth"
@@ -52,7 +62,8 @@ const Calendar = (props) => {
         // 일정 추가 페이지에서 props로 이벤트를 받아옴
         events={sch_list}
         height="90vh"
-        eventClassNames = 'myclassname'
+        
+        
       />
       
     </Grid>

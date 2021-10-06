@@ -66,7 +66,7 @@ const Input = (props) => {
           ref={_ref}
           {...styles}
           type={type}
-          
+          defaultValue={dvalue}
           placeholder={place}
           onChange={_onChange}
           disabled={disabled}
