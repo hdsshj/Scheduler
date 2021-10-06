@@ -25,6 +25,7 @@ const SchCreate = (props) => {
     const createSch = () => {
       console.log(title, date)
       dispatch(schAction.addSch({title : title , date : date}))
+      history.push('/')
     }
 
     return (

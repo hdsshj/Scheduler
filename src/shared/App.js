@@ -13,7 +13,7 @@ function App() {
   return (
     <ConnectedRouter history = {history}>
       <Route path = '/' component = {Calendar} exact/>
-      <Route path = '/detail' component = {SchDetail} exact/>
+      <Route path = '/detail/:sch_id' component = {SchDetail} exact/>
       <Route path = '/create' component = {SchCreate} exact/>
       <Button is_float _onClick = {()=>{history.push('/create')}}>+</Button>
     </ConnectedRouter>

@@ -18,7 +18,7 @@ const delSch = createAction(DEL_SCH, (sch_id) => ({ sch_id }));
 const initialState = {
   sch_list: [
       {id : 'aaaa1', title : '앙 해야대1' , date : '2021-10-11', is_end : false},
-      {id : 'aaaa2', title : '앙 해야대2' , date : '2021-10-12', is_end : false},
+      {id : 'aaaa2', title : '앙 해야대2' , date : '2021-10-12', is_end : true},
       {id : 'aaaa3', title : '앙 해야대3' , date : '2021-10-16', is_end : false},
       {id : 'aaaa4', title : '앙 해야대4' , date : '2021-10-29', is_end : false},
   ],
