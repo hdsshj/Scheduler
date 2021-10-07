@@ -4,9 +4,14 @@ import { actionCreators as schAction } from '../redux/modules/schedule';
 import {useDispatch} from 'react-redux'
 import { history } from "../redux/configStore";
 
+import "moment";
+import moment from "moment";
+
 
 const SchCreate = (props) => {
     const dispatch = useDispatch()
+
+    const insert_dt = moment().format("YYYY-MM-DD hh:mm:ss");
 
     const [title, setTitle] = React.useState('');
     const [date, setDate] = React.useState('');
@@ -25,9 +30,12 @@ const SchCreate = (props) => {
 
     const createSch = () => {
       console.log(title, date)
-      dispatch(schAction.addSch({title : title , date : date}))
+      dispatch(schAction.addSchFB({title : title , date : date, insert_dt : insert_dt, is_end : false}))
       history.push('/')
     }
+
+    const nowDate = moment().format("YYYY-MM-DD")
+    
 
     return (
         <React.Fragment>
@@ -38,7 +46,7 @@ const SchCreate = (props) => {
         </Grid>
         <Grid>
           <Text>일시</Text>
-          <Input type = 'text' _onChange = {changeDate}/>
+          <Input type = 'date' value = {nowDate} dvalue = {nowDate} _onChange = {changeDate}/>
         </Grid>
         <Grid is_flex>
           <Grid padding = '16px'>

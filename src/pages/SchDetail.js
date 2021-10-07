@@ -21,7 +21,7 @@ const SchDetail = (props) => {
     if(handlePopup){
       dispatch(schActions.onPopup(false))
     }
-    dispatch(schActions.delSch(sch_id))
+    dispatch(schActions.delSchFB(sch_id))
     }
 
     const endSch = (e) => {
@@ -29,7 +29,7 @@ const SchDetail = (props) => {
       if(handlePopup){
         dispatch(schActions.onPopup(false))
       }
-      dispatch(schActions.editSch(sch_id))
+      dispatch(schActions.editSchFB(sch_id))
       }
 
 
