@@ -1,5 +1,4 @@
 import { createAction, handleActions } from "redux-actions";
-import { query, orderBy } from "firebase/firestore";
 import {
   collection,
   getDoc,
@@ -10,12 +9,9 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../shared/firebase";
-import { history } from "../configStore";
-
 import { produce } from "immer";
 import "moment";
 import moment from "moment";
-import { async } from "@firebase/util";
 
 const SET_SCH = "SET_SCH";
 const LOAD_SCH = "LOAD_SCH";
@@ -69,7 +65,7 @@ const addSchFB = (sch) => {
 const editSchFB = (sch_id) => {
   return async function (dispatch, getState, { history }) {
     const docRef = doc(db, "schedule", sch_id);
-    await updateDoc(docRef, { is_end: true, color: "green" });
+    await updateDoc(docRef, { is_end: true, color: "#FFB085" });
 
     const _sch_list = getState().schedule.sch_list;
     const _sch_idx = _sch_list.findIndex((s) => {
@@ -123,7 +119,7 @@ export default handleActions(
         draft.sch_list[idx] = {
           ...draft.sch_list[idx],
           is_end: true,
-          color: "green",
+          color: "#FFB085",
         };
       }),
     [DEL_SCH]: (state, action) =>
@@ -149,7 +145,7 @@ export default handleActions(
           });
         } else {
           draft.sch_list.map((s, idx) => {
-            draft.sch_list[idx] = { ...s, display: "auto" };
+            draft.sch_list[idx] = { ...s, display: "block" };
             draft.show_end = false;
           });
         }

@@ -18,6 +18,22 @@ const Calendar = (props) => {
   const [sch_id, setSchId] = React.useState("");
   const sch_list = useSelector((state) => state.schedule.sch_list);
   const handlePopup = useSelector((state) => state.schedule.is_popup);
+  const [open, setOpen] = React.useState(false);
+
+  const show_end = useSelector((state) => state.schedule.show_end)
+
+
+  const onEndSch = () => {
+     if(!show_end){
+      dispatch(schActions.showSch(true))
+     }else{
+      dispatch(schActions.showSch(false))
+     }
+  }
+
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     if (sch_list.length < 2) {
@@ -26,22 +42,11 @@ const Calendar = (props) => {
 
   }, [])
 
-  // const a = sch_list
-  // console.log(sch_list)
-  // a.sort(function (a, b) {
-  //   return (
-  //     moment(a["insert_dt"], "YYYY-MM-DD HH:mm:ss") -
-  //     moment(b["insert_dt"], "YYYY-MM-DD hh:mm:ss")
-  //   )
-  // }
-  // )
-
 
   console.log(sch_list)
 
   // 배열을 복사해야 한다 이거때매 시간 다날렸다 ㅎㅎ;
   const _sch_list = sch_list.slice()
-
  
     const sort_sch_list = _sch_list.sort(function (a, b) {
       return moment([a.insert_dt], "YYYY-MM-DD hh:mm:ss")-
@@ -50,28 +55,6 @@ const Calendar = (props) => {
     console.log(sort_sch_list);
   
   
-
- 
-
-
- 
-
-  // sch_list.sort(function (a, b) {
-  //   console.log(a.insert_dt > b.insert_dt)
-  //   console.log(b.insert_dt)
-  //   if (a.insert_dt  > b.insert_dt) {
-  //     return 1;
-  //   }
-  //   if (a.insert_dt < b.insert_dt) {
-  //     return -1;
-  //   }
-  //   // a must be equal to b
-  //   return 0;
-  // });
-
-  // const idx = sch_list.findIndex((s) => s.id === sch_id);
-
-  // const checkEnd = sch_list[idx] ? sch_list[idx].is_end : "";
 
   const handleDateClick = (arg) => {
     // bind with an arrow function
@@ -98,8 +81,8 @@ const Calendar = (props) => {
   };
 
   return (
-    <Grid bg="#eee" width="70%" padding="30px">
-      {handlePopup && <SchDetail sch_id={sch_id} />}
+    <Grid border_radius = '30px' height = '100%'  bg="#FEF1E6" width="70%" padding="30px">
+      {handlePopup && <SchDetail sch_id={sch_id} handleOpen = {handleOpen} handleClose = {handleClose}/>}
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -109,10 +92,15 @@ const Calendar = (props) => {
         weekends={true}
         // 일정 추가 페이지에서 props로 이벤트를 받아옴
         events={sort_sch_list}
-        height="90vh"
+        
+        height="80vh"
+        padding = '100px'
+        dayMaxEventRows = 'true'
 
-        // eventColor = {checkEnd ? 'green' : 'black'}
+        eventColor = '#90AACB'
       />
+      <Button is_float_s _onClick = {onEndSch}>{show_end ? '모두!' : '완료!'}</Button>
+
     </Grid>
   );
 };

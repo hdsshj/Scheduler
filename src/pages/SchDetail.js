@@ -1,11 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
+import { styled, Box } from '@mui/system';
+import TextField from '@mui/material/TextField';
+import ModalUnstyled from '@mui/core/ModalUnstyled';
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Input, Text, Button } from "../elements";
 import { actionCreators as schActions } from "../redux/modules/schedule";
 
 const SchDetail = (props) => {
-  const {onClose} = props
   const dispatch = useDispatch();
   const sch_id = props.sch_id;
   const sch_list = useSelector((state) => state.schedule.sch_list);
@@ -13,6 +15,11 @@ const SchDetail = (props) => {
   const sch = sch_list[sch_idx];
 
   const handlePopup = useSelector((state) => state.schedule.is_popup)
+
+  const {onClose} = props
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   
   console.log(sch);
@@ -32,30 +39,45 @@ const SchDetail = (props) => {
       dispatch(schActions.editSchFB(sch_id))
       }
 
+      const exc_pop = () => {
+        dispatch(schActions.onPopup(false))
+      }
 
+      const sch_date = sch.start.split('T')[0]
+      const sch_time = sch.start.split('T')[1]
+
+      console.log(sch.start.split('T')[1])
 
   return (
-    <Popup>
-      <Grid padding="30px">
-        <Grid>
-          <Text>일정 내용</Text>
-          <Input dvalue={sch?.title} />
+    <div>
+      
+      <StyledModal
+        aria-labelledby="unstyled-modal-title"
+        aria-describedby="unstyled-modal-description"
+        open={handlePopup}
+        onClose={exc_pop}
+        BackdropComponent={Backdrop}
+      >
+        <Popup>
+        <Grid padding="30px">
+        <Grid width = '90%' margin = '30px auto'>
+          <TextField sx={{width : '100%'}} label="Todo" variant="outlined" value={sch?.title} disabled/>
         </Grid>
-        <Grid>
-          <Text>일시</Text>
-          <Input dvalue={sch?.date} />
+        <Grid width = '90%' is_flex>
+          <TextField sx={{width : '50%'}} type = 'date' variant="outlined" value={sch_date} disabled/>
+          <TextField sx={{width : '45%', step : '600'}}  type = 'time' variant="outlined" value={sch_time} disabled/>
+          
+          
         </Grid>
-        <Grid is_flex>
-          <Grid padding="16px">
+        <Grid is_flex padding =  '30px'>
             <Button _onClick = {removeSch}>일정 삭제</Button>
-          </Grid>
 
-          <Grid padding="16px">
             <Button _onClick = {endSch}>일정 완료</Button>
-          </Grid>
         </Grid>
       </Grid>
-    </Popup>
+        </Popup>
+      </StyledModal>
+    </div>
   );
 };
 
@@ -64,13 +86,48 @@ SchDetail.defaultProps = {
   date: "2021-10-07",
 };
 
-const Popup = styled.div`
-  background-color: aqua;
+const Popup = styled('div')`
+  background-color: #FEF1E6;
   position: fixed;
+  border-radius: 30px;
   width: 40vw;
   top: 30vh;
   left: 30vw;
   z-index: 2;
 `;
+
+const StyledModal = styled(ModalUnstyled)`
+  position: fixed;
+  z-index: 1300;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+`;
+
+const Backdrop = styled('div')`
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-tap-highlight-color: transparent;
+  
+`;
+
+const style = {
+  width: 400,
+  bgcolor: 'white',
+  border: '0px solid #000',
+  p: 2,
+  px: 4,
+  pb: 3,
+};
 
 export default SchDetail;
