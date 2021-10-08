@@ -34,29 +34,23 @@ const onPopup = createAction(ON_POPUP, (is_popup) => ({ is_popup }));
 const showSch = createAction(SHOW_SCH, (show_end) => ({ show_end }));
 
 const initialState = {
-  sch_list: [
-   
-  ],
+  sch_list: [],
   is_popup: false,
   show_end: false,
-  insert_dt : moment().format("YYYY-MM-DD hh:mm:ss"),
+  insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
 
 //미들웨어
 
 //파베DB 로드
-const loadSchFB = (start=null) => {
+const loadSchFB = (start = null) => {
   return async function (dispatch, getState, { history }) {
     const sch_data = await getDocs(collection(db, "schedule"));
-
-    
-
     let sch_list = [];
 
     sch_data.forEach((doc) => {
       sch_list.push({ id: doc.id, ...doc.data() });
     });
-    
 
     dispatch(loadSch(sch_list));
   };
@@ -65,7 +59,7 @@ const loadSchFB = (start=null) => {
 const addSchFB = (sch) => {
   return async function (dispatch, getState, { history }) {
     const docRef = await addDoc(collection(db, "schedule"), sch);
-    
+
     const sch_data = { id: docRef.id, ...sch };
 
     dispatch(addSch(sch_data));
@@ -73,32 +67,31 @@ const addSchFB = (sch) => {
 };
 
 const editSchFB = (sch_id) => {
-  return async function (dispatch, getState, {history}){
-    const docRef = doc(db, 'schedule', sch_id)
-    await updateDoc(docRef, {is_end : true, color : 'green'})
+  return async function (dispatch, getState, { history }) {
+    const docRef = doc(db, "schedule", sch_id);
+    await updateDoc(docRef, { is_end: true, color: "green" });
 
     const _sch_list = getState().schedule.sch_list;
     const _sch_idx = _sch_list.findIndex((s) => {
       return s.id === sch_id;
-    })
+    });
 
-    dispatch(editSch(_sch_list[_sch_idx].id))
-  }
-}
+    dispatch(editSch(_sch_list[_sch_idx].id));
+  };
+};
 
 const delSchFB = (sch_id) => {
-  return async function (dispatch, getState, {history}){
-    const docRef = doc(db, 'schedule', sch_id);
-    await deleteDoc(docRef)
+  return async function (dispatch, getState, { history }) {
+    const docRef = doc(db, "schedule", sch_id);
+    await deleteDoc(docRef);
 
     const _sch_list = getState().schedule.sch_list;
     const _sch_idx = _sch_list.findIndex((s) => {
       return s.id === sch_id;
-    })
-    dispatch(delSch(_sch_list[_sch_idx].id))
-    
-  }
-}
+    });
+    dispatch(delSch(_sch_list[_sch_idx].id));
+  };
+};
 
 //리듀서
 export default handleActions(
@@ -114,8 +107,8 @@ export default handleActions(
         //     return acc;
         //   }
         // }, []);
-        
-        draft.sch_list = action.payload.sch_list
+
+        draft.sch_list = action.payload.sch_list;
       }),
     [ADD_SCH]: (state, action) =>
       produce(state, (draft) => {

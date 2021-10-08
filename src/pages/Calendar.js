@@ -20,33 +20,41 @@ const Calendar = (props) => {
   const handlePopup = useSelector((state) => state.schedule.is_popup);
 
   React.useEffect(() => {
-    if (sch_list.length === 0) {
+    if (sch_list.length < 2) {
     dispatch(schActions.loadSchFB())
     }
-    
+
   }, [])
 
+  // const a = sch_list
+  // console.log(sch_list)
+  // a.sort(function (a, b) {
+  //   return (
+  //     moment(a["insert_dt"], "YYYY-MM-DD HH:mm:ss") -
+  //     moment(b["insert_dt"], "YYYY-MM-DD hh:mm:ss")
+  //   )
+  // }
+  // )
+
+
   console.log(sch_list)
 
+  // 배열을 복사해야 한다 이거때매 시간 다날렸다 ㅎㅎ;
+  const _sch_list = sch_list.slice()
 
-
-
-
-
-
-  // 시간순 오름차순 정렬하기.
-  var items = [
-    { name: 'Edward', value: 21 },
-    { name: 'Sharpe', value: 37 },
-    { name: 'And', value: 45 },
-    { name: 'The', value: -12 },
-    { name: 'Magnetic', value: 13 },
-    { name: 'Zeros', value: 37 }
-  ];
+ 
+    const sort_sch_list = _sch_list.sort(function (a, b) {
+      return moment([a.insert_dt], "YYYY-MM-DD hh:mm:ss")-
+      moment([b.insert_dt], "YYYY-MM-DD hh:mm:ss");
+    });
+    console.log(sort_sch_list);
   
-  // value 기준으로 정렬
+  
 
-  console.log(sch_list)
+ 
+
+
+ 
 
   // sch_list.sort(function (a, b) {
   //   console.log(a.insert_dt > b.insert_dt)
@@ -60,7 +68,6 @@ const Calendar = (props) => {
   //   // a must be equal to b
   //   return 0;
   // });
-  
 
   // const idx = sch_list.findIndex((s) => s.id === sch_id);
 
@@ -91,7 +98,7 @@ const Calendar = (props) => {
   };
 
   return (
-    <Grid bg = '#eee' width="70%" padding="30px">
+    <Grid bg="#eee" width="70%" padding="30px">
       {handlePopup && <SchDetail sch_id={sch_id} />}
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
@@ -101,9 +108,8 @@ const Calendar = (props) => {
         select={handleDateSelect}
         weekends={true}
         // 일정 추가 페이지에서 props로 이벤트를 받아옴
-        events={sch_list}
+        events={sort_sch_list}
         height="90vh"
-        
 
         // eventColor = {checkEnd ? 'green' : 'black'}
       />
