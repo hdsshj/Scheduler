@@ -19,6 +19,7 @@ function App() {
           <Route path="/" component={Calendar} exact />
           <Route path="/detail/:sch_id" component={SchDetail} exact />
           <Route path="/create" component={SchCreate} exact />
+          <Grid>
           <Button
             is_float
             _onClick={() => {
@@ -27,6 +28,7 @@ function App() {
           >
             +
           </Button>
+          </Grid>
         </ConnectedRouter>
       </Grid>
     </Grid>

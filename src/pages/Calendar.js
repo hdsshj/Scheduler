@@ -108,9 +108,11 @@ const Calendar = (props) => {
         dayMaxEventRows="true"
         eventColor="#90AACB"
       />
+      <Grid bg = 'red' width = '200px'>
       <Button is_float_s _onClick={onEndSch}>
         {show_end ? "모두!" : "완료!"}
       </Button>
+      </Grid>
     </Grid>
   );
 };
