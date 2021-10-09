@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
-import { Grid, Input, Text, Button } from "../elements";
-import { actionCreators as schAction } from "../redux/modules/schedule";
+
 import { useDispatch } from "react-redux";
+import { actionCreators as schAction } from "../redux/modules/schedule";
 import { history } from "../redux/configStore";
 
-import { styled, Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
-import ModalUnstyled from "@mui/core/ModalUnstyled";
+
+import { Grid, Button } from "../elements";
 
 import "moment";
 import moment from "moment";
@@ -17,7 +17,11 @@ const SchCreate = (props) => {
   const time = useRef("");
   const date = useRef("");
 
-  const insert_dt = moment().format("YYYY-MM-DD hh:mm:ss");
+  const nowDate = moment().format("YYYY-MM-DD");
+  const nowtime = moment().format("hh:mm");
+
+  // 머티리얼 텍스트필드에서 동작을 안한다.. 방법을 찾아봐야 한다 메모..
+  // 일단은 Ref로 해결함! (근데 이거도 input Ref 써야된다!)
 
   // const [title, setTitle] = React.useState('');
   // const [start_date, setStartDate] = React.useState('');
@@ -26,18 +30,18 @@ const SchCreate = (props) => {
   // const [end_time, setEndTime] = React.useState('');
 
   // const changeTitle = (e) => {
-  //   setTitle(title.current.value)
-  //   console.log(title.current.value)
+  //   setTitle(e.target.value)
+  //   console.log(e.target.value)
   // }
 
   // const changeStartDate = (e) => {
-  //   setStartDate(date.current.value)
-  //   console.log(date.current.value)
+  //   setStartDate(e.target.value)
+  //   console.log(e.target.value)
   // }
 
   // const changeStartTime = (e) => {
-  //   setStartTime(time.current.value)
-  //   console.log(time.current.value)
+  //   setStartTime(e.target.value)
+  //   console.log(e.target.value)
   // }
 
   // const changeEndDate = (e) => {
@@ -46,14 +50,16 @@ const SchCreate = (props) => {
   // }
 
   // const changeEndTime = () => {
-  //   setEndTime(title.current.value)
+  //   setEndTime(e.target.value)
   // }
 
   //'2010-01-09T12:30:00'
 
+  // Schedule 추가
   const createSch = () => {
-    if(title.current.value === '' || date.current.value === ''){
-      window.alert('일정을 입력해주세요!')
+    // data는 defaule value 값을 넣어 두었지만 체크해도 나쁠건 없겠다
+    if (title.current.value === "" || date.current.value === "") {
+      window.alert("일정을 입력해주세요!");
       return;
     }
     dispatch(
@@ -67,14 +73,11 @@ const SchCreate = (props) => {
     history.push("/");
   };
 
-  const nowDate = moment().format("YYYY-MM-DD");
-  const nowtime = moment().format("hh:mm");
-
   return (
     <Grid main>
-      <Grid  width="70%" height = '300px' padding = '150px 60px 0px 60px'>
-        <Grid  border_radius  = '25px' bg="#FEF1E6" padding="30px">
-          <Grid  width="90%" margin="30px auto">
+      <Grid width="70%" height="300px" padding="150px 60px 0px 60px">
+        <Grid border_radius="25px" bg="#FEF1E6" padding="30px">
+          <Grid width="90%" margin="30px auto">
             <TextField
               sx={{ width: "100%" }}
               inputRef={title}
@@ -98,15 +101,15 @@ const SchCreate = (props) => {
               variant="outlined"
             />
           </Grid>
-          <Grid is_flex padding =  '30px'>
-              <Button
-                _onClick={() => {
-                  history.replace("/");
-                }}
-              >
-                작성 취소
-              </Button>
-              <Button _onClick={createSch}>작성 완료</Button>
+          <Grid is_flex padding="30px">
+            <Button
+              _onClick={() => {
+                history.replace("/");
+              }}
+            >
+              작성 취소
+            </Button>
+            <Button _onClick={createSch}>작성 완료</Button>
           </Grid>
         </Grid>
       </Grid>

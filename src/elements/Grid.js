@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-    const { is_flex, width, padding, margin, bg, children, center, maxheight, _onClick, main, border_radius} = props;
+    const { is_flex, width, padding, margin, bg, children, center, maxheight, _onClick, main, border_radius, shadow} = props;
 
     const styles = {
         is_flex : is_flex,
@@ -12,7 +12,8 @@ const Grid = (props) => {
         bg : bg,
         center:center,
         maxheight:maxheight,
-        border_radius:border_radius
+        border_radius:border_radius,
+        shadow:shadow
     }
 
     if(main){
@@ -46,6 +47,7 @@ Grid.defaultProps = {
     maxheight : false,
     _onClick : () => {},
     border_radius : '0px',
+    shadow : false,
 }
 
 const GridBox = styled.div`
@@ -54,6 +56,7 @@ const GridBox = styled.div`
     margin: auto;
     box-sizing: border-box;
     background-size:cover ;
+    
 
     
     ${(props)=>props.padding ? `padding : ${props.padding};` : ''};
@@ -63,6 +66,7 @@ const GridBox = styled.div`
     ${(props)=>props.center ? 'text-align : center;' : ''};
     ${(props)=>props.maxheight ? `max-height : ${props.maxheight};` : ''};
     ${(props)=>props.border_radius ? `border-radius : ${props.border_radius};` : ''};
+    ${(props)=>props.shadow ? `box-shadow : ${props.shadow};` : ''};
 `;
 
 const WrapGridBox = styled.div`
