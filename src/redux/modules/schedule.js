@@ -13,7 +13,6 @@ import { produce } from "immer";
 import "moment";
 import moment from "moment";
 
-const SET_SCH = "SET_SCH";
 const LOAD_SCH = "LOAD_SCH";
 const ADD_SCH = "ADD_SCH";
 const EDIT_SCH = "EDIT_SCH";
@@ -21,12 +20,15 @@ const DEL_SCH = "DEL_SCH";
 const ON_POPUP = "ON_POPUP";
 const SHOW_SCH = "SHOW_SCH";
 
-const setSch = createAction(SET_SCH, (sch_list) => ({ sch_list }));
+// 액션 생성 함수
+// CRUD
 const loadSch = createAction(LOAD_SCH, (sch_list) => ({ sch_list }));
 const addSch = createAction(ADD_SCH, (sch) => ({ sch }));
 const editSch = createAction(EDIT_SCH, (sch_id) => ({ sch_id }));
 const delSch = createAction(DEL_SCH, (sch_id) => ({ sch_id }));
+// 팝업 모니터링
 const onPopup = createAction(ON_POPUP, (is_popup) => ({ is_popup }));
+// 모든 일정, 완료 일정 모니터링
 const showSch = createAction(SHOW_SCH, (show_end) => ({ show_end }));
 
 const initialState = {
@@ -38,7 +40,7 @@ const initialState = {
 
 //미들웨어
 
-//파베DB 로드
+//DB 로드
 const loadSchFB = (start = null) => {
   return async function (dispatch, getState, { history }) {
     const sch_data = await getDocs(collection(db, "schedule"));
@@ -52,6 +54,7 @@ const loadSchFB = (start = null) => {
   };
 };
 
+//DB 추가
 const addSchFB = (sch) => {
   return async function (dispatch, getState, { history }) {
     const docRef = await addDoc(collection(db, "schedule"), sch);
@@ -62,6 +65,7 @@ const addSchFB = (sch) => {
   };
 };
 
+//DB 수정 (이지만 그냥 완료표시만 해둠)
 const editSchFB = (sch_id) => {
   return async function (dispatch, getState, { history }) {
     const docRef = doc(db, "schedule", sch_id);
@@ -76,6 +80,7 @@ const editSchFB = (sch_id) => {
   };
 };
 
+//DB 삭제
 const delSchFB = (sch_id) => {
   return async function (dispatch, getState, { history }) {
     const docRef = doc(db, "schedule", sch_id);
