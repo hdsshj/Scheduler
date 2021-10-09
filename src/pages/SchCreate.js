@@ -75,8 +75,13 @@ const SchCreate = (props) => {
 
   return (
     <Grid main>
-      <Grid width="70%" height="300px" padding="150px 60px 0px 60px" >
-        <Grid border_radius="25px" bg="#FEF1E6" padding="30px" shadow = '0 10px 20px rgba(0, 0, 0, 0.6), 0 6px 4px rgba(0, 0, 0, 0.2)'>
+      <Grid width="70%" height="300px" padding="150px 60px 0px 60px">
+        <Grid
+          border_radius="25px"
+          bg="#FEF1E6"
+          padding="30px"
+          shadow="0 10px 20px rgba(0, 0, 0, 0.6), 0 6px 4px rgba(0, 0, 0, 0.2)"
+        >
           <Grid width="90%" margin="30px auto">
             <TextField
               sx={{ width: "100%" }}

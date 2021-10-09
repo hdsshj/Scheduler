@@ -3,9 +3,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as schActions } from "../redux/modules/schedule";
 
-import FullCalendar from "@fullcalendar/react"; 
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction"; 
+import interactionPlugin from "@fullcalendar/interaction";
 
 import SchDetail from "../components/SchDetail";
 
@@ -14,10 +14,8 @@ import { Button, Grid } from "../elements";
 import "moment";
 import moment from "moment";
 
-
 const Calendar = (props) => {
   const dispatch = useDispatch();
-
 
   const sch_list = useSelector((state) => state.schedule.sch_list);
 
@@ -27,8 +25,8 @@ const Calendar = (props) => {
   const handlePopup = useSelector((state) => state.schedule.is_popup);
   const show_end = useSelector((state) => state.schedule.show_end);
 
-    // 이벤트 ID
-    const [sch_id, setSchId] = React.useState("");
+  // 이벤트 ID
+  const [sch_id, setSchId] = React.useState("");
 
   //완료 일정 보기
   //state의 show_end값을 체크하여 true => false, false => true 변경
@@ -40,14 +38,12 @@ const Calendar = (props) => {
     }
   };
 
-
   React.useEffect(() => {
-      dispatch(schActions.loadSchFB());
+    dispatch(schActions.loadSchFB());
   }, []);
 
   // 배열을 복사해야 한다 이거때매 시간 다날렸다 ㅎㅎ;
   const _sch_list = sch_list.slice();
-
 
   // 배열은 insert_dt 순으로 정렬이 되었는데
   // calendar 에서는 여전히 멋대로 정렬을 한다.
@@ -70,7 +66,6 @@ const Calendar = (props) => {
     }
   };
 
-
   // const handleDateClick = (arg) => {
   //   // bind with an arrow function
   //   console.log(arg);
@@ -87,19 +82,14 @@ const Calendar = (props) => {
       bg="#FEF1E6"
       width="80%"
       padding="30px"
-      shadow = '0 10px 20px rgba(0, 0, 0, 0.6), 0 6px 4px rgba(0, 0, 0, 0.2)'
+      shadow="0 10px 20px rgba(0, 0, 0, 0.6), 0 6px 4px rgba(0, 0, 0, 0.2)"
     >
-      {handlePopup && (
-        <SchDetail
-          sch_id={sch_id}
-
-        />
-      )}
+      {handlePopup && <SchDetail sch_id={sch_id} />}
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         eventClick={handleEventClick}
-        editable = {true}
+        editable={true}
         weekends={true}
         // 일정 추가 페이지에서 props로 이벤트를 받아옴
         events={sort_sch_list}
@@ -108,10 +98,10 @@ const Calendar = (props) => {
         dayMaxEventRows="true"
         eventColor="#90AACB"
       />
-      <Grid bg = 'red' width = '200px'>
-      <Button is_float_s _onClick={onEndSch}>
-        {show_end ? "모두!" : "완료!"}
-      </Button>
+      <Grid bg="red" width="200px">
+        <Button is_float_s _onClick={onEndSch}>
+          {show_end ? "모두!" : "완료!"}
+        </Button>
       </Grid>
     </Grid>
   );
